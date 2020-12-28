@@ -11,6 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/logout', 'ConnectController@logout')->name('logout');
+
+Route::group(['middleware' => 'guest'], function () {
+
+    Route::view('/login', 'connect.login')->name('login');
+    Route::post('/login', 'ConnectController@login')->name('login');
+    
+    Route::view('/register', 'connect.register')->name('register');
+    Route::post('/register', 'ConnectController@register')->name('register');
+});
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
 });
