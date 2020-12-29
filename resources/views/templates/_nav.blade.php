@@ -25,6 +25,7 @@
         </div>
     </div>
     <ol class="breadcrumb my-4 mx-3 bg-white shadow">
-        <li class="breadcrumb-item "><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li class="breadcrumb-item disabled"><a href="{{ Route::currentRouteNamed('dashboard') ? '#' : route('dashboard') }}" ><i class="fas fa-home"></i> Dashboard</a></li>
+        @yield('breadcrumb')
     </ol>
 </nav>

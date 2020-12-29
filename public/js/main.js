@@ -1,4 +1,6 @@
 $('document').ready(function(){
+
+    // Funciones del template
     $('#btn-sidebar').click(function(e){
         $('#nav').slideUp()
         $('#sidebar').toggleClass('show')
@@ -25,4 +27,9 @@ $('document').ready(function(){
         $(this).next().slideToggle()
         e.stopPropagation()
     })
+
+    // editor de productos
+    if(document.getElementById('editor')){
+        CKEDITOR.replace('editor')
+    }
 })

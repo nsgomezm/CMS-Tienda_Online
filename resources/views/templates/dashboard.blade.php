@@ -18,6 +18,7 @@
     <script src="https://kit.fontawesome.com/d10f5f87f4.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
 
+    <script src="{{ asset('libs/ckeditor/ckeditor.js') }}"></script>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
@@ -25,13 +26,24 @@
         @include('templates._sidebar')
         <div class="full-content">
             @include('templates._nav')
-            @yield('content')
+            <div class="container-fluid">
+                <div class="panel rounded bg-white shadow border-bottom p-3">
+                    <header class="pb-3">
+                        <h2 class="title d-flex justify-content-between align-items-center">
+                            @yield('subtitle')
+                        </h2>
+                    </header>
+                    <section>
+                        @yield('content')
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 
 
     <script src="{{ asset('js/app.js') }}" rel="stylesheet"></script>
-    <script src="{{ asset('js/navbar.js') }}" rel="stylesheet"></script>
+    <script src="{{ asset('js/main.js') }}" rel="stylesheet"></script>
     @yield('js')
 </body>
 </html>
