@@ -41,4 +41,14 @@ class User extends Authenticatable
     public function setPasswordAttribute($value){
         $this->attributes['password'] = \Illuminate\Support\Facades\Hash::make($value);
     }
+
+    public function getFullNameAttribute(){
+        return "{$this->name} {$this->lastname}";
+    }
+
+    public function getShortFullNameAttribute(){
+        $explodeName = explode(" ", $this->full_name );
+
+        return  count($explodeName) >= 3 ? "$explodeName[0] $explodeName[2]" : "$explodeName[0] $explodeName[1]" ;
+    }
 }

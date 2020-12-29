@@ -1,0 +1,31 @@
+@mixin btn($color, $hover, $padding: 0 ) {
+    display: block;
+    background-color: transparent;
+    position: relative;
+    color: $color;
+    text-transform: capitalize;
+    position: relative;
+    padding: $padding;
+    &::before{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        transition: all linear .3s;
+        background-color: transparent;
+    }
+    .sidebar-menu__icon{
+        transition: all linear .3s;
+    }
+
+    &:hover,
+    &.active{
+        color: $hover;
+        &::before{
+            width: 100%;
+            background-color: $hover;
+        }
+    }
+}

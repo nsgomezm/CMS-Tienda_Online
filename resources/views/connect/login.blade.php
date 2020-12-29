@@ -1,4 +1,4 @@
-@extends('connect.master')
+@extends('templates.login')
 
 @section('title',  'Login')
 

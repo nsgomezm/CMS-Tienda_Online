@@ -1,4 +1,4 @@
-@extends('connect.master')
+@extends('templates.login')
 @section('title', 'Registrate')
 @section('content')
     <div class="box cross-center">
