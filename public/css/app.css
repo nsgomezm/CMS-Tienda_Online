@@ -54,6 +54,7 @@ li {
 
 .full-content {
   width: 100%;
+  overflow: auto;
 }
 
 .border-bottom {
@@ -83,6 +84,7 @@ li {
 .navbar {
   position: relative;
   background-color: var(--primary-color);
+  z-index: 100000;
 }
 
 .navbar #btn-sidebar {

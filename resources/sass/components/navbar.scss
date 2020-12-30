@@ -1,6 +1,7 @@
 .navbar{
     position: relative;
     background-color: var(--primary-color);
+    z-index: 100000;
     #btn-sidebar{
         cursor: pointer;
     }

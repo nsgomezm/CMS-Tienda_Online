@@ -17,7 +17,10 @@
             <li class="sidebar-menu__item">
                 <a href="{{ Route::currentRouteNamed('dashboard.users') ? '#' : route('dashboard.users') }}" class="sidebar-menu__link  {{ !Route::currentRouteNamed('dashboard.users') ? : 'active' }}"><i class="fas fa-users sidebar-menu__icon"></i> Usuarios</a>
             </li>
-            <li class="sidebar-menu__item"  >
+            <li class="sidebar-menu__item">
+                <a href="{{ Route::currentRouteNamed('dashboard.categories') ? '#' : route('dashboard.categories') }}" class="sidebar-menu__link  {{ !Route::currentRouteNamed('dashboard.categories') ? : 'active' }}"><i class="fas fa-folder-open sidebar-menu__icon"></i> Categorias</a>
+            </li>
+            {{-- <li class="sidebar-menu__item"  >
                 <a href="#" class="sidebar-menu__link subitem" ><i class="fas fa-home sidebar-menu__icon"></i> Item <i class="fas fa-angle-down sidebar-menu__icon--rigth text-center"></i></a>
                 <ul class="sidebar-menu__subitem" >
                     <li class="sidebar-menu__item">
@@ -27,21 +30,7 @@
                         <a href="#" class="sidebar-menu__link"><i class="fas fa-home sidebar-menu__icon"></i> sub item </a>
                     </li>
                 </ul>
-            </li>
-            <li class="sidebar-menu__item"  >
-                <a href="#" class="sidebar-menu__link subitem" id="" ><i class="fas fa-home sidebar-menu__icon"></i> Item <i class="fas fa-angle-down sidebar-menu__icon--rigth text-center"></i></a>
-                <ul class="sidebar-menu__subitem" >
-                    <li class="sidebar-menu__item">
-                        <a href="#" class="sidebar-menu__link"><i class="fas fa-home sidebar-menu__icon"></i> sub item</a>
-                    </li>
-                    <li class="sidebar-menu__item">
-                        <a href="#" class="sidebar-menu__link"><i class="fas fa-home sidebar-menu__icon"></i> sub item </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-menu__item">
-                <a href="#" class="sidebar-menu__link"><i class="fas fa-home sidebar-menu__icon"></i> Usuarios</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>
