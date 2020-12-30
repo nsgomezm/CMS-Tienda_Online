@@ -99,7 +99,7 @@
                                     <select name="module" value="null" id="module" class="custom-select">
                                         <option value="null">Seleccionar</option>
                                         @foreach (getModules() as $key => $module )
-                                            <option value="{{$key}}" >{{$module}}</option>
+                                            <option value="{{$key}}"  @if(old('module') == $key) selected @endif >{{$module}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -111,7 +111,7 @@
                                         <select name="type_icon" value="null" id="type_icon" class="custom-select">
                                             <option value="null">Seleccionar</option>
                                             @foreach (getTypeIcons() as $key => $type_icon )
-                                                <option value="{{$key}}" >{{$type_icon}}</option>
+                                                <option value="{{$key}}"  @if(old('type_icon') == $key) selected @endif>{{$type_icon}}</option>
                                             @endforeach
                                         </select>
                                     </div>

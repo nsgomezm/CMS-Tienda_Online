@@ -13,8 +13,8 @@ Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
 
         Route::group(['prefix' => 'Products'], function () {
             Route::view('/List', 'dashboard.products.list')->name('dashboard.products');
-            Route::view('/form', 'dashboard.products.form')->name('dashboard.products.form');
-            // Route::post('/form', 'dashboard.products.form')->name('dashboard.products.update');
+            Route::get('/form', 'Dashboard\ProdutController@form')->name('dashboard.products.form');
+            Route::post('/create', 'Dashboard\ProdutController@create')->name('dashboard.products.create');
         });
 
         Route::group(['prefix' => 'Categories'], function () {

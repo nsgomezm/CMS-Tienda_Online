@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div class="inside">
-        {!! Form::open(['url' => 'ruta' ]) !!} {{-- route('dashboard.products.update') --}}
+        {!! Form::open(['url' => route('dashboard.products.create'), 'enctype' => 'multipart/form-data' ]) !!} 
             <div class="form-row">
                 <div class="form-group col-12 col-lg-4">
                     <label>Nombre del producto: </label>
@@ -17,8 +17,9 @@
                                 <i class="far fa-keyboard"></i>
                             </span>
                         </div>
-                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        <input type="text" value="{{ old('name') }}" name="name" class="form-control {{ ($errors->first('name')) ? 'is-invalid' : '' }}">
                     </div>
+                    <small class="form-text text-danger">{{ $errors->first('name') }}</small>
                 </div>
                 <div class="form-group col-12 col-lg-4">
                     <label>Categoria: </label>
@@ -28,8 +29,14 @@
                                 <i class="far fa-object-group"></i>
                             </span>
                         </div>
-                        {!! Form::text('category', null, ['class' => 'form-control']) !!}
+                        <select name="category_id" class="custom-select {{ ($errors->first('category_id')) ? 'is-invalid' : '' }}" value="">
+                            <option value="null">Select</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif> {{ $category->name }} </option>
+                            @endforeach
+                        </select>
                     </div>
+                    <small class="form-text text-danger">{{ $errors->first('category') }}</small>
                 </div>
                 <div class="form-group col-12 col-lg-4">
                     <label>Imagen destacada: </label>
@@ -40,11 +47,11 @@
                             </span>
                         </div>
                         <div class="custom-file">
-                            {!! Form::file('img', ['class' => 'custom-file-input', 'id' => 'img']) !!}
-                            <label for="img" class="custom-file-label">Choose File</label>
-
+                            <input type="file" name="image" accept="image/*" class="custom-file-input {{ ($errors->first('image')) ? 'is-invalid' : '' }}" id="image" value="{{ old('img') }}">
+                            <label for="image" class="custom-file-label">Choose File</label>
                         </div>
                     </div>
+                    <small class="form-text text-danger">{{ $errors->first('image') }}</small>
                 </div>
             </div>
             <div class="form-row">
@@ -56,34 +63,38 @@
                                 <i class="fas fa-dollar-sign"></i>
                             </div>
                         </div>
-                        {!! Form::number('price', null, ['class' => 'form-control', 'min' => '0.00', 'step' => '0.01']) !!}
+                        <input type="number" name="price" value="{{old('price')}}" min="0.00" step="0.01" class="form-control {{ ($errors->first('price')) ? 'is-invalid' : '' }}">
                     </div>
+                    <small class="form-text text-danger">{{ $errors->first('price') }}</small>
                 </div>
                 <div class="from-group col-12 col-lg-6">
                     <label>Descuento del producto</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            {!! Form::select('discount', ['0' => 'No', '1' => 'Si'], 0,  ['class' => 'custom-select']) !!}
+                            {!! Form::select('is_descount', ['0' => 'No', '1' => 'Si'], 0,  ['class' => 'custom-select']) !!}
                         </div>
-                        {!! Form::number('price', null, ['class' => 'form-control', 'min' => '0.00', 'step' => '0.01']) !!}
+                        <input type="number" name="descount" value="{{ old('descount') }}" min="0.00" step="0.01" class="form-control {{ ($errors->first('descount')) ? 'is-invalid' : '' }}">
+                        {{-- {!! Form::number('descount', null, ['class' => 'form-control', 'min' => '0.00', 'step' => '0.01']) !!} --}}
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 %
                             </div>
                         </div>
                     </div>
+                    <small class="form-text text-danger">{{ $errors->first('descount') }}</small>
                 </div>
             </div>
             <div class="form-row mt-2">
                 <div class="form-group col-12">
                     <label>Descripción:</label>
+                    <small class="form-text text-danger">{{ $errors->first('description') }}</small>
                     {!! Form::textarea('description', null, ['class' => 'form-control', 'id' => 'editor']) !!}
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <a href="#" class="btn btn-outline-danger">Eliminar producto</a>
-                    <a href="#" class="btn btn-success">Guardar</a>
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-success']) !!}
                 </div>
             </div>
         {!! Form::close() !!}
