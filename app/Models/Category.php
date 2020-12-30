@@ -20,7 +20,4 @@ class Category extends Model
     function getFullImageCategoryAttribute(){
         return "<img src='http://{$this->icon}'></img>";
     }
-
-    function setNameAttribute($value){ $this->attributes['name'] = e($value); }
-    function setIconAttribute($value){ $this->attributes['icon'] = e($value); }
 }

@@ -4,6 +4,20 @@
 
 @section('content')
     <div class="box cross-center shadow bg-white rounded">
+        @if (Session::has('message'))
+            <div class="container">
+                <div class="alert alert-{{ Session::get('typealert') }} ">{{--  --}}
+                    {{ Session::get('message') }}
+                    @if ($errors->any())
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+        @endif
         {!! Form::open(['url' => Route('login')]) !!}
             <div class="form-group mb-4">
                 <label for="email">Correo electronico</label>

@@ -16,21 +16,6 @@
     <script src="https://kit.fontawesome.com/d10f5f87f4.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    @if (Session::has('message'))
-        <div class="container">
-            <div class="alert alert-{{ Session::get('typealert') }} ">{{--  --}}
-                {{ Session::get('message') }}
-                @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
-        </div>
-    @endif
-
     @yield('content')
 </body>
 </html>
