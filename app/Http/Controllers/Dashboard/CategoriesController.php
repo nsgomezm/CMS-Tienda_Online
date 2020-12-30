@@ -27,16 +27,20 @@ class CategoriesController extends Controller
 
         if( (isset($_POST['id']) ) ? $_POST['id'] : false) {
             $category = Category::find($_POST['id']);
+            $request->merge(['slug' => Str::slug($request->name) ]);
             $category->update($request->all());
             $category->save();
 
             Session::flash('message', 'Actulización correcta');
-            return view('dashboard.categories.list', ['filter'=>'all', 'categories' => Category::where('id', $category->id)->get()]);
+            return redirect( route('dashboard.categories'));
+            // return view('dashboard.categories.list', ['filter'=>'all', 'categories' => Category::where('id', $category->id)->get()]);
         }
         
 
+        $request->merge(['slug' => Str::slug($request->name) ]);
         $category = new Category($request->all());
         $category->save();
+
         return back()->with('message', 'Categoria guardada, ok.');
     }
 

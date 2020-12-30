@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
             Route::get('/List', 'Dashboard\CategoriesController@main')->name('dashboard.categories');
             Route::get('/delete/{category?}', 'Dashboard\CategoriesController@delete')->name('dashboard.categories.delete');
             Route::post('/create/{category?}', 'Dashboard\CategoriesController@create')->name('dashboard.categories.create');
+            // Route::post('/create/{category}', 'Dashboard\CategoriesController@create')->name('dashboard.categories.create');
         });
         // Route::get('/products', 'Dashboard\UserController@products')->name('dashboard.products');
     });

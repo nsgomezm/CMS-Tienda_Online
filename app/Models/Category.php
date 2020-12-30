@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,5 +23,4 @@ class Category extends Model
 
     function setNameAttribute($value){ $this->attributes['name'] = e($value); }
     function setIconAttribute($value){ $this->attributes['icon'] = e($value); }
-    function setSlugAttribute($value){ $this->attributes['slug'] = \Illuminate\Support\Str::slug($value); }
 }
