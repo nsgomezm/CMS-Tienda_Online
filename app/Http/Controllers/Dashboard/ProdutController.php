@@ -21,13 +21,15 @@ class ProdutController extends Controller
             'name' => 'required',
             'category_id' => 'required|not_in:null',
             'price' => 'numeric|required|min:0',
-            'description' => 'required'
+            'descount' => 'numeric|min:0|max:2',
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,jpg,png,svg'
         ]);
 
         if($request->hasFile('img')){
-            $fileExt = trim($request->file('img')->getClientOriginalExtension());
-            $request->img->move( public_path('img/products'), time().'.'.$fileExt);
-            $request->merge(['image' => 'img/products.'.$fileExt ]);
+            $name = time().'.'.trim($request->file('img')->getClientOriginalExtension());
+            $request->img->move( public_path('img/products'), $name);
+            $request->merge(['image' => 'img/products/'.$name ]);
         }
         $request->merge(['slug' => Str::slug($request->name)]);
         $product = new Produt($request->all());

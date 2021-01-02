@@ -36,7 +36,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <small class="form-text text-danger">{{ $errors->first('category') }}</small>
+                    <small class="form-text text-danger">{{ $errors->first('category_id') }}</small>
                 </div>
                 <div class="form-group col-12 col-lg-4">
                     <label>Imagen destacada: </label>
@@ -74,14 +74,17 @@
                             {!! Form::select('is_descount', ['0' => 'No', '1' => 'Si'], 0,  ['class' => 'custom-select']) !!}
                         </div>
                         <input type="number" name="descount" value="{{ old('descount') }}" min="0.00" step="0.01" class="form-control {{ ($errors->first('descount')) ? 'is-invalid' : '' }}">
-                        {{-- {!! Form::number('descount', null, ['class' => 'form-control', 'min' => '0.00', 'step' => '0.01']) !!} --}}
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 %
                             </div>
                         </div>
                     </div>
-                    <small class="form-text text-danger">{{ $errors->first('descount') }}</small>
+                    @if ($errors->first('descount'))
+                        <small class="form-text text-danger">{{ $errors->first('descount') }}</small>
+                    @else
+                        <span class="text-muted" style="font-size: 12px">El valor debe ser entre 0.00 y 2.00 por defecto el valor es 0</span>
+                    @endif
                 </div>
             </div>
             <div class="form-row mt-2">

@@ -152,7 +152,10 @@ return [
         'type_icon' => 'tipo de icono',
         'icon' => 'icono',
         'price' => 'precio',
-        'description' => 'descripción'
-    ],
+        'description' => 'descripción',
+        'category_id' => 'categoria',
+        'image' => 'imagen',
+        'descount' => 'descuento'
+    ], 
 
 ];

@@ -2,10 +2,8 @@
 @section('title', 'Listado de categorias')
 @section('css')
     <style>
-        .content-dinamic span{
-            font-size: 30px;
-        }
         .content-dinamic div{
+            font-size: 30px;
             width: 80px;
         }
         img{
@@ -62,7 +60,7 @@
                                 </button>
                             </div>
                         @endif
-                        @if ($errors->any())
+                        {{-- @if ($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <ul>
                                     @foreach ($errors->all() as $error)
@@ -73,8 +71,8 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                        @endif
-                        {!! Form::open(['url' => route('dashboard.categories.create')]) !!}
+                        @endif --}}
+                        {!! Form::open(['url' => route('dashboard.categories.store')]) !!}
                             {!! Form::text('id', null, ['class' => 'd-none', 'id' => 'id']) !!}
                         
                             <div class="form-group">
@@ -87,6 +85,7 @@
                                     </div>
                                     {!! Form::text('name', old('name'), ['class' => 'form-control', 'id' => 'name']) !!}
                                 </div>
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
                             </div>
                             <div class="form-group">
                                 <label>Módulo</label>
@@ -103,6 +102,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <span class="text-danger">{{ $errors->first('module') }}</span>
                             </div>
                             <div class="form-group">
                                 <label>Ícono</label>
@@ -117,6 +117,12 @@
                                     </div>
                                     {!! Form::text('icon', null, ['class'  => 'form-control', 'id' => 'icon']) !!}
                                 </div>
+                                @if ($errors->first('type_icon') || $errors->first('icon') ) 
+                                    <span class="text-danger"> Tipo de icono o el icono es incorrecto </span>
+                                @else
+                                    <span class="text-muted" style="font-size:12px" >Para optimo funcionamiento solo ingresa texto plano, <b>sin caracteres especiales</b></span>
+                                @endif
+
                             </div>
                             <div class="form-group">
                                 <input type="reset"   id="cta-reset" class="d-none">
@@ -134,7 +140,7 @@
             <div class="col-12 col-lg-8 mt-5 mt-lg-0">
                 <div class="inside">
                     @if (Session::has('delete'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             {{ Session::get('delete') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -152,34 +158,31 @@
                         </div>
                     @else
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-hover">
                                 <thead>
                                     <th >Icono</th>
-                                    <th class="w-50">Nombre</th>
-                                    <th class="w-30">Acciones</th>
+                                    <th >Nombre</th>
+                                    <th >Modulo</th>
+                                    <th >Acciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($categories as $category)
                                     <tr id="{{$category->id}}">
-                                        <td class="d-none">
-                                            {{ $category->id }}
+                                        <td class="d-none" data-attribute = "type_icon">
+                                            {{ $category->type_icon }}
                                         </td>
-                                        
-                                        <td class="d-none">
-                                            {{ $category->module }}
+                                        <td class="d-none" data-attribute="icon">
+                                            {{ $category->icon }}
                                         </td>
                                         <td class="content-dinamic text-center">
-                                            @if ($category->type_icon != 'http')
-                                                <span >{!! htmlspecialchars_decode($category->full_icon) !!}</span>
-                                            @else
-                                                <div class="mx-auto">
-                                                    {!! htmlspecialchars_decode($category->full_image_category) !!}
-                                                </div>
-                                            @endif
+                                            <div class="mx-auto">
+                                                {!! $category->full_icon !!}
+                                            </div>
                                         </td>
-                                        <td>{{ $category->name }}</td>
+                                        <td data-attribute="name">{{ $category->name }}</td>
+                                        <td data-attribute="module">{{ $category->module }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-outline-info cta-action fas fa-edit tolltip" title="Editar registro" data-data="{{$category}}" data-type="edit"></a>
+                                            <a href="#" class="btn btn-outline-info cta-action fas fa-edit tolltip" title="Editar registro" data-id="{{$category->id}}"></a>
                                             <a href="{{ route('dashboard.categories.delete')}}/{{$category->id}}" class="btn btn-outline-danger  fas fa-trash-alt"  title="Eliminar registro" ></a>
                                         </td>
                                     </tr>
@@ -210,23 +213,25 @@
                 let item = edit[key]
                 if(typeof(item) == 'object'){
                     item.addEventListener('click', function(e){
-                        let data = getMatrizData(e.target.dataset.data)
-                        if(e.target.dataset.type == 'edit'){
-                            document.getElementById('cta-store').innerHTML = 'Actualizar'
-                            resetForm( data  )
-                        }
+                        document.getElementById('cta-store').innerHTML = 'Actualizar'
+                        let data = resetForm(getMatrizData(e.target.dataset.id))
                     })
                 }
             }
         }
         
-        function getMatrizData(data){
-            let array = []
-            data.replace(/['"}{]+/g, '').split(',').forEach(item => {
-                item = item.split(':')
-                array[item[0]] = item[1]
-            })
-            return  array
+        function getMatrizData(id){
+
+            let data = []
+            data['id'] = id
+            document.getElementById(id).childNodes.forEach(function(td){
+                if(td.nodeName != '#text' && td.dataset.attribute){
+                    data[td.dataset.attribute] = td.innerHTML.trim()
+                    console.log(`${td.dataset.attribute} => ${td.innerHTML.trim()}` )
+                }
+            });
+            console.log(data)
+            return data
         }
 
         function resetForm(data){

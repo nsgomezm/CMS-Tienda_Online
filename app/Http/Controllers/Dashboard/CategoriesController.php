@@ -15,8 +15,7 @@ class CategoriesController extends Controller
         return view('dashboard.categories.list', ['filter' => $category_filter,'categories' => ($category_filter == 'all' ? Category::get() : Category::where('module',$category_filter)->get()) ]);
     }
 
-    protected function create(Request $request){
-        // return $request->all();
+    protected function store(Request $request){
         $request->validate([
             'name' => 'required',
             'module' => 'required|not_in:null',
@@ -31,9 +30,7 @@ class CategoriesController extends Controller
             $category->update($request->all());
             $category->save();
 
-            Session::flash('message', 'Actulización correcta');
-            return redirect( route('dashboard.categories'));
-            // return view('dashboard.categories.list', ['filter'=>'all', 'categories' => Category::where('id', $category->id)->get()]);
+            return redirect()->route('dashboard.categories')->with('message', 'Actualización correcta');
         }
         
 
@@ -48,9 +45,8 @@ class CategoriesController extends Controller
 
         if($category){
             $category->delete();
+            return redirect()->route('dashboard.categories')->with('delete', 'Se eliminó correctamente');
         }
-        
-        Session::flash('delete', 'Se eliminó correctamente');
-        return redirect( route('dashboard.categories') );
+        return redirect()->rouute('dashboard.categories');
     }
 }

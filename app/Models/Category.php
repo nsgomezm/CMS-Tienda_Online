@@ -14,10 +14,14 @@ class Category extends Model
         'name', 'slug', 'module', 'type_icon', 'icon', 
     ];
 
+    function setIconAttribute($value){ $this->attributes['icon'] = htmlspecialchars($value); }
+
+    function getIconAttribute($value){ return html_entity_decode($value); }
+
     function getFullIconAttribute(){
-        return "<i class='{$this->type_icon} {$this->icon}'></i>";
-    }
-    function getFullImageCategoryAttribute(){
+        if($this->type_icon != 'http'){
+            return "<i class='{$this->type_icon} {$this->icon}'></i>";
+        }
         return "<img src='http://{$this->icon}'></img>";
     }
 }
