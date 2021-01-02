@@ -84,7 +84,7 @@ li {
 .navbar {
   position: relative;
   background-color: var(--primary-color);
-  z-index: 100000;
+  z-index: 1000;
 }
 
 .navbar #btn-sidebar {

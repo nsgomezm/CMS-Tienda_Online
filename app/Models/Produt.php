@@ -25,4 +25,10 @@ class Produt extends Model
         'status' => 'boolean',
         'is_descount' => 'boolean',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
+
 }

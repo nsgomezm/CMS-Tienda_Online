@@ -10,11 +10,18 @@ use App\Http\Controllers\Controller;
 
 class ProdutController extends Controller
 {
-    public function form(){
-        $categories = Category::where('module', 'productos')->get();
-        return view('dashboard.products.form', compact('categories'));
+    public function index(){
+        return view('dashboard.products.list', ['products' => Produt::orderBy('id', 'desc')->with('category')->get() ]); /* orderBy('id', 'DESC') */
     }
-
+    
+    public function form(Produt $product = null){
+        $compact = [
+            'update' => ($product) ? true : false,
+            'categories' => Category::where('module', 'productos')->get(),
+            'product' => ($product) ? $product : null,
+        ];
+        return view('dashboard.products.form', $compact);
+    }
 
     public function create(Request $request){
         $request->validate([
@@ -26,15 +33,44 @@ class ProdutController extends Controller
             'image' => 'image|mimes:jpeg,jpg,png,svg'
         ]);
 
-        if($request->hasFile('img')){
-            $name = time().'.'.trim($request->file('img')->getClientOriginalExtension());
-            $request->img->move( public_path('img/products'), $name);
-            $request->merge(['image' => 'img/products/'.$name ]);
-        }
-        $request->merge(['slug' => Str::slug($request->name)]);
+        $request->merge(['slug' => Str::slug($request->name), 'image' => $this->movePhoto($request)]);
         $product = new Produt($request->all());
         $product->save();
 
-        return redirect()->route('dashboard.products');
+        return redirect()->route('dashboard.products.form', $product->id)->with('type_alert', 'success')->with('message', 'El registro se creó correctamente.');
+    }
+
+    public function update(Produt $product, Request $request){
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required|not_in:null',
+            'price' => 'numeric|required|min:0',
+            'descount' => 'numeric|min:0|max:2',
+            'description' => 'required',
+            'img' => 'image|mimes:jpeg,jpg,png,svg'
+        ]);
+
+        $request->merge(['slug' => Str::slug($request->name), 'image' => $this->movePhoto($request)]);
+        $product->update($request->all());
+        $product->save();
+
+        return redirect()->route('dashboard.products.form', $product->id)->with('type_alert', 'success')->with('message', 'El registro se actualizó correctamente.');
+    }
+
+    public function delete(Produt $product){
+        $product->delete();
+        return redirect()->route('dashboard.products')->with('type_alert', 'warning')->with('message', 'El registro se eliminó correctamente.');     
+    }
+
+    private function movePhoto($request){
+        $name = null;
+        
+        if($request->hasFile('img')){
+            $name = time().'.'.trim($request->file('img')->getClientOriginalExtension());
+            $request->img->move( public_path('img/products'), $name);
+        }
+        return ($name) ? "img/products/$name" : 'img/noimage.png';
     }
 }
+
+

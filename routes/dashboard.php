@@ -1,6 +1,11 @@
-<?php 
+<?php
 
+use App\Models\Produt;
 use Illuminate\Support\Facades\Auth;
+
+Route::get('/test', function(){
+    return Produt::with('category')->find(35);
+});
 
 Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
 
@@ -12,9 +17,11 @@ Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
         });
 
         Route::group(['prefix' => 'Products'], function () {
-            Route::view('/List', 'dashboard.products.list')->name('dashboard.products');
-            Route::get('/form', 'Dashboard\ProdutController@form')->name('dashboard.products.form');
+            Route::get('/List', 'Dashboard\ProdutController@index')->name('dashboard.products');
             Route::post('/create', 'Dashboard\ProdutController@create')->name('dashboard.products.create');
+            Route::post('/update/{product}', 'Dashboard\ProdutController@update')->name('dashboard.products.update');
+            Route::get('/delete/{product}', 'Dashboard\ProdutController@delete')->name('dashboard.products.delete');
+            Route::get('/form/{product?}', 'Dashboard\ProdutController@form')->name('dashboard.products.form');
         });
 
         Route::group(['prefix' => 'Categories'], function () {

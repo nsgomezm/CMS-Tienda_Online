@@ -24,4 +24,10 @@ class Category extends Model
         }
         return "<img src='http://{$this->icon}'></img>";
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
+    
 }
