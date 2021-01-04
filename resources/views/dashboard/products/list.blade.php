@@ -40,7 +40,7 @@
                     </button>
                 </div>
             @endif
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <th>ID</th>
                     <th>ID</th>
@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                        <tr>
+                        <tr @if(!$product->status) class="table-secondary" @endif>
                             <td>{{ $product->id }}</td>
                             <td><a href="{{ asset($product->image) }}" target="_blanck" data-fancybox="gallery"> <div class="content-img"><img src="{{ asset($product->image) }}" alt="Imagen producto {{$product->name}}" loading="lazy"> </div></a> </td>
                             <td>{{ $product->name }}</td>

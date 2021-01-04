@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="from-group col-12 col-lg-6">
+                <div class="from-group col-12 col-lg-4">
                     <label >Precio:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -119,7 +119,7 @@
                     </div>  
                     <small class="form-text text-danger">{{ $errors->first('price') }}</small>
                 </div>
-                <div class="from-group col-12 col-lg-6">
+                <div class="from-group col-12 col-lg-4">
                     <label>Descuento del producto</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -149,6 +149,18 @@
                     @else
                         <span class="text-muted" style="font-size: 12px">El valor debe ser entre 0.00 y 2.00 por defecto el valor es 0</span>
                     @endif
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label>Estado</label>
+                    <select name="status" class="custom-select" >
+                        @if($update)
+                            <option value="0" @if($product->status == 0) selected @endif >Inactivo</option>
+                            <option value="1" @if($product->status == true) selected @endif >Activo</option>
+                        @else
+                            <option value="0" @if(old('status') == 0) selected @endif >Inactivo</option>
+                            <option value="1" @if(old('status') == true) selected @endif >Activo</option>
+                        @endif
+                    </select>
                 </div>
             </div>
             <div class="form-row mt-2">
