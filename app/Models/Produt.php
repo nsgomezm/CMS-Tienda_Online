@@ -20,6 +20,11 @@ class Produt extends Model
     protected function getDescriptionAttribute($value){
         return html_entity_decode($value);
     }
+
+    protected function getImageNameAttribute(){
+        $data = explode('/', $this->image);
+        return end( $data );
+    }
     
     protected $casts = [
         'status' => 'boolean',
@@ -31,4 +36,7 @@ class Produt extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
+    public function photos(){
+        return $this->hasMany('App\Models\Gallery', 'product_id');
+    }
 }

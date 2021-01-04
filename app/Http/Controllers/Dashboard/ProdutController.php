@@ -50,7 +50,11 @@ class ProdutController extends Controller
             'img' => 'image|mimes:jpeg,jpg,png,svg'
         ]);
 
-        $request->merge(['slug' => Str::slug($request->name), 'image' => $this->movePhoto($request)]);
+        $merge = [ 
+            'slug' => Str::slug($request->name),
+            'image' => ($request->hasFile('img')) ? $this->movePhoto($request) : $product->image
+        ];
+        $request->merge($merge);
         $product->update($request->all());
         $product->save();
 

@@ -1,9 +1,42 @@
 @extends('templates.dashboard')
 @section('title', 'Listado de productos')
-@section('subtitle' , 'Actualizar producto')
+@section('js')
+    <script>
+        function resetLabel(name){ document.getElementById('image-label').innerText = "Imagen no seleccionada" }
+        
+        document.getElementById('image').addEventListener('change', (e) => {
+            let path = e.target.value.split('\\')
+            document.getElementById('image-label').innerText = path[path.length-1]
+        })
+        function preview(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image-preview')
+                        .attr('src', e.target.result);
+
+                    $('#content-image-preview')
+                        .attr('href', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+@endsection
+@section('subtitle')
+    <p>
+        @if ($update) Actualizar producto @else Crear producto @endif
+    </p>
+    @if($update)
+        <div>
+            <a href=" {{route('dashboard.products.gallery', $product->id)}} " class="btn btn-outline-primary"><i class="fas fa-images"></i> Galleria</a>
+        </div>
+    @endif
+@endsection
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ route('dashboard.products') }}"><i class="fas fa-boxes"></i> Productos</a></li>
-    <li class="breadcrumb-item "><a href="#"><i class="fas fa-edit"></i> Actualizar</a></li>
+    <li class="breadcrumb-item "><a href="{{ route('dashboard.products')}}"><i class="fas fa-boxes"></i> Productos</a></li>
+    <li class="breadcrumb-item "><a href="#"><i class="fas fa-edit"></i> @if($update) Actualizar @else Crear @endif</a></li>
 @endsection
 @section('content')
     <div class="inside">
@@ -56,18 +89,14 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                @if($update)
-                                    <a href="{{asset($product->image)}}" target="_blanck" data-fancybox="gallery" class="fas fa-camera">
-                                        <img src=" {{asset($product->image)}} " alt="" class="d-none">
-                                    </a>
-                                @else
-                                    <i class="fas fa-camera"></i>
-                                @endif
+                                <a href="@if($update) {{asset($product->image)}} @else # @endif" target="_blanck" data-fancybox="gallery" class="fas fa-camera" id="content-image-preview">
+                                    <img src="@if($update) {{asset($product->image)}} @endif" alt="" class="d-none" id="image-preview">
+                                </a>
                             </span>
                         </div>
                         <div class="custom-file">   
-                            <input type="file" name="img" accept="image/*" class="custom-file-input {{ ($errors->first('img')) ? 'is-invalid' : '' }}" id="image" value="{{ old('img') }}">
-                            <label for="image" class="custom-file-label">Choose File</label>
+                            <input type="file" name="img" accept="image/*" class="custom-file-input {{ ($errors->first('img')) ? 'is-invalid' : '' }}" id="image" onchange="preview(this)"  onfocus="resetLabel('@if ($update) {{ $product->image_name }} @endif')">
+                            <label for="image" class="custom-file-label" id="image-label"> @if ($update) {{ $product->image_name }}  @else Seleccionar imagen @endif</label>
                         </div>
                     </div>
                     <small class="form-text text-danger">{{ $errors->first('img') }}</small>

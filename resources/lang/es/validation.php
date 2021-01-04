@@ -154,7 +154,7 @@ return [
         'price' => 'precio',
         'description' => 'descripción',
         'category_id' => 'categoria',
-        'image' => 'imagen',
+        'img' => 'imagen',
         'descount' => 'descuento'
     ], 
 

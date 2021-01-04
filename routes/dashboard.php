@@ -22,6 +22,13 @@ Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
             Route::post('/update/{product}', 'Dashboard\ProdutController@update')->name('dashboard.products.update');
             Route::get('/delete/{product}', 'Dashboard\ProdutController@delete')->name('dashboard.products.delete');
             Route::get('/form/{product?}', 'Dashboard\ProdutController@form')->name('dashboard.products.form');
+
+            Route::group(['prefix' => 'Gallery'], function () {
+                Route::get('/{product}', 'Dashboard\GalleryController@index')->name('dashboard.products.gallery');
+                Route::post('/store/{product}', 'Dashboard\GalleryController@store')->name('dashboard.products.gallery.store');
+                Route::get('/delete/{id}/{gallery}', 'Dashboard\GalleryController@delete')->name('dashboard.products.gallery.delete');
+            });
+            
         });
 
         Route::group(['prefix' => 'Categories'], function () {

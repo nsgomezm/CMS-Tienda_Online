@@ -53,7 +53,7 @@
                     @foreach ($products as $product)
                         <tr>
                             <td>{{ $product->id }}</td>
-                            <td><a href="{{ asset($product->image) }}" target="_blanck" data-fancybox="gallery"> <div class="content-img"><img src="{{ asset($product->image) }}" alt="Imagen producto {{$product->name}}"> </div></a> </td>
+                            <td><a href="{{ asset($product->image) }}" target="_blanck" data-fancybox="gallery"> <div class="content-img"><img src="{{ asset($product->image) }}" alt="Imagen producto {{$product->name}}" loading="lazy"> </div></a> </td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->price }}</td>
