@@ -155,7 +155,8 @@ return [
         'description' => 'descripción',
         'category_id' => 'categoria',
         'img' => 'imagen',
-        'descount' => 'descuento'
+        'descount' => 'descuento',
+        'email' => 'Correo electronico'
     ], 
 
 ];

@@ -8,7 +8,7 @@ Route::get('/test', function(){
 });
 
 Route::group(['middleware' => ['auth', 'isAdmin'] ], function () {
-
+    
     Route::group(['prefix' => 'Dashboard'], function () {
         Route::view('/', 'dashboard.main')->name('dashboard');
 

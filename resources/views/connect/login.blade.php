@@ -44,7 +44,7 @@
             {!! Form::submit('Ingresar', ['class' => 'btn btn-success w-100']) !!}
             <div class="my-4 d-flex justify-content-between flex-wrap">
                 <a href="{{ Route('register') }}">Registrate</a>
-                <a href="#">Recuperar contraseña</a>
+                <a href="{{ Route('recover') }}">Recuperar contraseña</a>
             </div>
         {!! Form::close() !!}
     </div>

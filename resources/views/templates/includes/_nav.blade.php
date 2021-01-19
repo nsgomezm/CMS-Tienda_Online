@@ -4,7 +4,7 @@
             <i class="fas fa-bars mr-2"  id="btn-sidebar"></i>
             {{ env("app_name") }}
         </div>
-    
+        
         <div class="navbar-brand ml-auto navbar-menu">
             <i class="far fa-user-circle navbar-menu__user" id="btn-nav" style="font-size: 1.2em"></i>
             <ul class="navbar-menu__content mr-md-3" id="nav" >

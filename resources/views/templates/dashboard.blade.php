@@ -28,9 +28,9 @@
 </head>
 <body>
     <div class="full-container">
-        @include('templates._sidebar')
+        @include('templates.includes._sidebar')
         <div class="full-content">
-            @include('templates._nav')
+            @include('templates.includes._nav')
             <div class="full-content px-3">
                 <div class="panel rounded bg-white shadow border-bottom p-3">
                     <header class="pb-3">
